@@ -1,18 +1,30 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <ul>
+      <li v-for="restaurant in allRestaurants" :key="restaurant.id">
+        {{ restaurant.attributes.name }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+  import { mapActions, mapGetters } from 'vuex';
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+  export default {
+    name: 'home',
+    mounted() {
+      this.loadAllRestaurants();
+    },
+    methods: {
+      ...mapActions({
+        loadAllRestaurants: 'restaurants/loadAll',
+      }),
+    },
+    computed: {
+      ...mapGetters({
+        allRestaurants: 'restaurants/all',
+      }),
+    },
+  };
 </script>
